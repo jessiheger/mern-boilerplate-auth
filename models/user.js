@@ -18,7 +18,7 @@ var userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 8,
+    minlength: 5,
     maxlength: 99
   }
 });
@@ -36,14 +36,8 @@ userSchema.set('toJSON', {
 });
 
 // helper method to make sure the pw the entered is correct
-userSchema.methods.authenticated = function(password, callback) {
-  bcrypt.compare(password, this.password, function(err, res) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, res ? this : false);
-    }
-  });
+userSchema.methods.authenticated = function(password) {
+  return bcrypt.compareSync(password, this.password)
 }
 
 // Mongoose's version of a beforeCreate hook

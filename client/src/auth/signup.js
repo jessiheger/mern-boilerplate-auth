@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Signup extends Component {
 	constructor(props){
@@ -26,6 +27,17 @@ class Signup extends Component {
 	{/* bc we use an arrow function, the scope is still to the Sign up component*/}
 		e.preventDefault();
 		console.log('form was submitted', this.state);
+		{/* connect this function to the router.post('/signup' route in auth.js : 
+		1st parameter: URL that I want to hit
+		2nd parameter: data that I want to send
+		Will only be able to reach /auth/signup if nodemon is running*/}
+		axios.post('/auth/signup', this.state)
+		.then(result => {
+			console.log("SUCCESS!", result.data)
+		})
+		.catch(err => {
+			console.log("ERROR", err)
+		})
 	}
 
 
@@ -44,8 +56,7 @@ class Signup extends Component {
 						</input>
 					</div>
 					<div>
-						<input name="Password" placeholder="What is your password?" value={this.state.password1} onChange={this.handlePasswordChange}>
-						</input>
+						<input name="Password" type="password" placeholder="What is your password?" value={this.state.password1} onChange={this.handlePasswordChange} />
 					</div>
 					<input type="submit" value="Sign Me Up!" className="button" />
 				</form>
