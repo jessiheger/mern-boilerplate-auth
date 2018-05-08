@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 class Login extends Component {
@@ -28,6 +29,11 @@ class Login extends Component {
 		axios.post('/auth/login', this.state)
 		.then(result => {
 			console.log("SUCCESS! result.data is ", result.data)
+			// when we sign up or login, we want to set the token; adds newly received token to local storage
+			localStorage.setItem('mernToken', result.data.token);
+			// update the user with a call to App.js to do this for us (the getUser function)
+			this.props.updateUser();
+			// ^ we want to send props to the login route
 		})
 		.catch(err => {
 			console.log("ERROR", err.response.data)
@@ -35,9 +41,12 @@ class Login extends Component {
 	}
 
 	render() {
+		if(this.props.user) {// if there is a logged in user
+			return (<Redirect to="/profile" />); // if you're already logged in, you dont need to sign up again
+		}
 		return(
 			<div className="login">
-			<h2>Login!</h2>
+				<h2>Login!</h2>
 				<form onSubmit={this.handleSubmit}>
 				{/* handeSubmit is defined above; "this" is referring to the Signup component*/}
 					<div>
