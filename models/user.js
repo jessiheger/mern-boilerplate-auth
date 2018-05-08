@@ -25,16 +25,17 @@ var userSchema = new mongoose.Schema({
 
 // Override 'toJSON' to prevent the password from being returned with the user
 userSchema.set('toJSON', {
-  transform: function(doc, ret, options) {
-    var returnJson = {
-      id: ret._id,
-      email: ret.email,
-      name: ret.name
+  transform: function(doc, user, options) {
+    var returnJson = { // password is purposefully missing fro this list of properties (so that it doesn't go to f-e)
+      id: user._id,
+      email: user.email,
+      name: user.name
     };
     return returnJson;
   }
 });
 
+// helper method to make sure the pw the entered is correct
 userSchema.methods.authenticated = function(password, callback) {
   bcrypt.compare(password, this.password, function(err, res) {
     if (err) {
