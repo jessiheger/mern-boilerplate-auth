@@ -37,11 +37,24 @@
 
 /* Link creates a <a> in Nav.js */
 nav a {
+  margin: 10px;
   text-decoration: none;
   font-size: 20px;
   color: chartreuse;
 }
 
-nav a: hover {
+nav a:hover {
   color: hotpink;
+}
+
+.footer {
+  background-color: #555;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+.footer-text {
+  color: white;
+  font-size: 11px;
 }

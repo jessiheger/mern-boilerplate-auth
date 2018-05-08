@@ -9,6 +9,9 @@ class Nav extends Component {
 			<div>
 				<nav className = "nav">
 					<Link to="/">Home</Link>
+        			<Link to="/login">Login</Link>
+					<Link to="/signup">Signup</Link>
+					<Link to="/profile">Profile</Link>
 					<header className="App-header">
           				<img src={logo} className="App-logo" alt="logo" />
           				<h1 className="App-title">Welcome to React</h1>
